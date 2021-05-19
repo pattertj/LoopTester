@@ -21,6 +21,18 @@ def main():
             filepath = subdir + os.sep + file
             df = read_csv(filepath)
 
+            # Decide if we need to open or close a position
+            # If Opening...
+            # Get current tick
+            # Calc Greeks
+            # Select Strike
+            # Log the Put
+
+            # If Closing
+            # Scan the df for a suitable exit
+            # If found, log it and go to next tick to open a position
+            # If not, go to next day
+
             # Print the path
             print("{} - {} - {}".format(datetime.now(), df.size, filepath))
 
