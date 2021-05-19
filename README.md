@@ -4,7 +4,7 @@ An extensible options backtester built on top of Python.
 ## Description
 The goal for LoopTester is to build an open source backtester for options trading strategies.
 
-    # Clone LoopTrader
+    # Clone LoopTester
     git clone https://github.com/pattertj/LoopTester.git
 
     # Install pipenv
