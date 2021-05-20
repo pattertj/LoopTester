@@ -1,7 +1,8 @@
 import os
 from datetime import datetime
 
-import pandas as pd
+import pyarrow as pa
+import pyarrow.csv as csv
 from pandas.core.frame import DataFrame
 
 
@@ -38,7 +39,7 @@ def main():
 
 
 def read_csv(filepath: str) -> DataFrame:
-    """Reads a given csv filepath to Pandas Dataframe
+    """Reads a given csv filepath to Pandas Dataframe using Apache Arrow
 
     Args:
         filepath (str): CSV Filepath
@@ -46,35 +47,21 @@ def read_csv(filepath: str) -> DataFrame:
     Returns:
         DataFrame: Resulting Dataframe
     """
-    return pd.read_csv(
+    return csv.read_csv(
         filepath,
-        memory_map=True,
-        compression="gzip",
-        sep=",",
-        quotechar='"',
-        error_bad_lines=False,
-        parse_dates=[["Date", "TimeBarStart"], "ExpirationDate"],
-        usecols=[
-            "Date",
-            "TimeBarStart",
-            "CallPut",
-            "Strike",
-            "ExpirationDate",
-            "CloseAskPrice",
-            "CloseBidPrice",
-            "UnderCloseBidPrice",
-        ],
-        dtype={
-            "Date_TimeBarStart": object,
-            "CallPut": object,
-            "Strike": float,
-            "ExpirationDate": object,
-            "CloseBidPrice": float,
-            "CloseAskPrice": float,
-            "CloseAskSize": float,
-            "UnderCloseBidPrice": float,
-        },
-    )
+        convert_options=pa.csv.ConvertOptions(
+            include_columns=[
+                "Date",
+                "TimeBarStart",
+                "CallPut",
+                "Strike",
+                "ExpirationDate",
+                "CloseAskPrice",
+                "CloseBidPrice",
+                "UnderCloseBidPrice",
+            ]
+        ),
+    ).to_pandas()
 
 
 if __name__ == "__main__":

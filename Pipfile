@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pandas = "*"
+pyarrow = "*"
 
 [dev-packages]
 black = "==21.5b1"
